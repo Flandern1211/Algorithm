@@ -1,12 +1,26 @@
 package Leetcode
 
+// 一、递归
+func reverseList1(head *ListNode) *ListNode {
+	//1.递归结束条件
+	if head == nil || head.Next == nil {
+		return head
+	}
+	//2.递归开始
+	last := reverseList1(head.Next)
+	//3.递归结束后的操作
+	head.Next.Next = head
+	head.Next = nil
+	return last
+}
+
 //反转链表
 
 // 思路：可以迭代遍历每一个节点，将其与前一个节点的连接反转
 // 实现：
 // 1.需要至少3个节点，目标节点，目标的父节点，目标的子节点
 // 2.
-func reverseList(head *ListNode) *ListNode {
+func reverseList2(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
