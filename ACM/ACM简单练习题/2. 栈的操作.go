@@ -7,40 +7,39 @@ import (
 )
 
 var stack = make([]int, 0)
+var p = &stack
 var in = bufio.NewReader(os.Stdin)
 var out = bufio.NewWriter(os.Stdout)
 
 // 将整数x入栈
 func Push(x int) {
-	if len(stack) == 0 {
-		return
-	}
-	stack[len(stack)-1] = x
+	(*p) = append(*p, x)
 }
 
+// 若栈非空，则删除栈顶元素；否则输出
 func Pop() {
-	if len(stack) != 0 {
-		stack = stack[:len(stack)-1]
+	if len(*p) != 0 {
+		(*p) = (*p)[:len(*p)-1]
 	} else {
 		fmt.Fprintln(out, "Empty")
 	}
 }
 
+// 若栈非空，则输出栈顶元素；否则输出 Empty
 func Query() {
-	if len(stack) != 0 {
-		stack = stack[:len(stack)-1]
-		fmt.Fprintln(out, stack[len(stack)-1])
+	if len(*p) != 0 {
+		fmt.Fprintln(out, (*p)[len(*p)-1])
 	} else {
 		fmt.Fprintln(out, "Empty")
 	}
 }
 
 func Size() {
-	fmt.Fprintln(out, len(stack))
+	fmt.Fprintln(out, len(*p))
 }
 
 func main() {
-
+	defer out.Flush()
 	var n int
 	fmt.Fscan(in, &n)
 
